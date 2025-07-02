@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: dim_borrowers
+    columns:
+      - name: borrower_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_time
+    columns:
+      - name: time_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_regions
+    columns:
+      - name: region_id
+        tests:
+          - not_null
+          - unique
+
+  - name: fact_repayments
+    columns:
+      - name: repayment_id
+        tests:
+          - not_null
+          - unique
+      - name: borrower_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_borrowers')
+              field: borrower_id
+      - name: time_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: time_id
+      - name: region_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_regions')
+              field: region_id
